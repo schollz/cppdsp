@@ -3,8 +3,23 @@
 #include <algorithm>
 #include <iostream>
 
+#include "KickSynth.h"
+
 void Player::trigger(std::unique_ptr<Synth> synth) {
   activeSynths.push_back(std::move(synth));
+}
+
+void Player::triggerKick(std::unique_ptr<KickSynth> kickSynth) {
+  // Fade out any existing KickSynths
+  for (auto& synth : activeSynths) {
+    KickSynth* kickPtr = dynamic_cast<KickSynth*>(synth.get());
+    if (kickPtr) {
+      kickPtr->fadeOutAndFree();
+    }
+  }
+
+  // Add the new KickSynth
+  activeSynths.push_back(std::move(kickSynth));
 }
 
 void Player::process(float** out, int blockSize) {
@@ -20,7 +35,7 @@ void Player::process(float** out, int blockSize) {
 
   for (auto& synth : activeSynths) {
     if (synth->isDone()) {
-      std::cerr << "Synth done\n";
+      // std::cerr << "Synth done\n";
     }
   }
   activeSynths.erase(std::remove_if(activeSynths.begin(), activeSynths.end(),

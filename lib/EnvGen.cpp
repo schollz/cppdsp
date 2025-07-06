@@ -18,7 +18,7 @@ double EnvGen::process() {
     segmentProgress = 0.0;
     if (currentSegment >= times.size()) {
       finished = true;
-      std::cout << "Envelope finished\n";
+      // std::cout << "Envelope finished\n";
       return levels.back();
     }
     alpha = 0.0;
