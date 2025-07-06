@@ -5,11 +5,11 @@
 constexpr double PI = 3.14159265358979323846;
 
 KickSynth::KickSynth(double sr, double bf, double r, double st, double pa,
-                     double a, double d1, double d1L, double d2, double c, 
+                     double a, double d1, double d1L, double d2, double c,
                      DoneEnvelope doneEnv)
     : osc(sr),
       freqEnv({bf * r, bf}, {st}, {-4.0}, sr),
-      ampEnv({c, 1.0, d1L, 0.0}, {0.0, d1, d2}, {0.0, -4.0, -4.0}, sr),
+      ampEnv({c, 1.0, d1L, 0.0}, {0.005, d1, d2}, {-4.0, -4.0, -4.0}, sr),
       basefreq(bf),
       ratio(r),
       sweeptime(st),
@@ -35,7 +35,7 @@ void KickSynth::process(float** out, int blockSize) {
     } else {
       envDone = ampEnv.isDone();
     }
-    
+
     if (envDone) {
       doneAction = true;
       return;

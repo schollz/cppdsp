@@ -26,11 +26,13 @@ double EnvGen::process() {
     double curve = curves[currentSegment];
     
     double output;
-    if (curve == 0.0) {
+    if (std::abs(curve) < 0.001) {
         output = startLevel + (endLevel - startLevel) * alpha;
     } else {
-        double exp_alpha = (std::exp(curve * alpha) - 1.0) / (std::exp(curve) - 1.0);
-        output = startLevel + (endLevel - startLevel) * exp_alpha;
+        double grow = std::exp(curve);
+        double a = (endLevel - startLevel) / (1.0 - grow);
+        double b = startLevel + a;
+        output = b - (a * std::pow(grow, alpha));
     }
     
     segmentProgress++;
