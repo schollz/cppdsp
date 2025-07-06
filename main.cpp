@@ -11,7 +11,7 @@
 
 Player* g_player = nullptr;
 double g_sampleRate = 44100.0;
-double g_bpm = 150.0;
+double g_bpm = 30.0;
 double g_samplesPerBeat = 0.0;
 int g_sampleCount = 0;
 int g_nextBeatSample = 0;
@@ -78,8 +78,8 @@ int jack_process(jack_nframes_t nframes, void* arg) {
   return 0;
 }
 
-void jack_shutdown(void* arg) { 
-  g_running = false; 
+void jack_shutdown(void* arg) {
+  g_running = false;
   if (g_wavFile) {
     sf_close(g_wavFile);
     g_wavFile = nullptr;
@@ -142,7 +142,8 @@ int main() {
     std::cerr << "Cannot connect output_left to system:playback_1" << std::endl;
   }
   if (jack_connect(client, "drumsynth:output_right", "system:playback_2")) {
-    std::cerr << "Cannot connect output_right to system:playback_2" << std::endl;
+    std::cerr << "Cannot connect output_right to system:playback_2"
+              << std::endl;
   }
 
   std::cout << "JACK client activated" << std::endl;
