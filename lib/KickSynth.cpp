@@ -51,8 +51,7 @@ void KickSynth::process(float** out, int blockSize) {
     }
 
     double sig = osc.process(freq + phase_random, 0.5 * PI) * preamp;
-    sig = tanh_distort(sig) * env;
-    sig = tanh_distort(sig * amp);
+    sig = tanh_distort(sig) * env * amp;
 
     // Apply fade-out multiplier
     sig *= fadeOutMultiplier;
