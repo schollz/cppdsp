@@ -5,20 +5,24 @@
 
 constexpr double PI = 3.14159265358979323846;
 
-KickSynth::KickSynth(double sr, double bf, double r, double st, double pa,
-                     double a, double d1, double d1L, double d2, double c)
+KickSynth::KickSynth(double sr, double base_frequency, double ratio,
+                     double sweep_time, double preamp, double amp,
+                     double decay1, double decay1_length, double decay2,
+                     double clickiness)
     : osc(sr),
-      freqEnv({bf * r, bf}, {st}, {-8.0}, sr),
-      ampEnv({c, 1.0, d1L, 0.0}, {0.005, d1, d2}, {-4.0, -4.0, -4.0}, sr),
-      basefreq(bf),
-      ratio(r),
-      sweeptime(st),
-      preamp(pa),
-      amp(a),
-      decay1(d1),
-      decay1L(d1L),
-      decay2(d2),
-      clicky(c) {}
+      freqEnv({base_frequency * ratio, base_frequency}, {sweep_time}, {-8.0},
+              sr),
+      ampEnv({clickiness, 1.0, decay1_length, 0.0}, {0.05, decay1, decay2},
+             {-4.0, -4.0, -4.0}, sr),
+      base_frequency(base_frequency),
+      ratio(ratio),
+      sweep_time(sweep_time),
+      preamp(preamp),
+      amp(amp),
+      decay1(decay1),
+      decay1_length(decay1_length),
+      decay2(decay2),
+      clickiness(clickiness) {}
 
 double KickSynth::tanh_distort(double x) { return std::tanh(x); }
 

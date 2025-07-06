@@ -11,7 +11,7 @@
 
 Player* g_player = nullptr;
 double g_sampleRate = 44100.0;
-double g_bpm = 30.0;
+double g_bpm = 150.0;
 double g_samplesPerBeat = 0.0;
 int g_sampleCount = 0;
 int g_nextBeatSample = 0;

@@ -8,7 +8,7 @@ EnvGen::EnvGen(const std::vector<double>& lvls, const std::vector<double>& tms,
     : levels(lvls), times(tms), curves(crvs), sampleRate(sr) {}
 
 double EnvGen::process() {
-  if (finished || currentSegment >= times.size()) return 0.0;
+  if (finished || currentSegment >= times.size()) return levels.back();
 
   double segmentLength = times[currentSegment] * sampleRate;
   double alpha = segmentProgress / segmentLength;
